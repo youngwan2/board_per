@@ -13,6 +13,7 @@ a {
 body {
   width: 100%;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 /* --------헤더 */
@@ -33,6 +34,7 @@ body {
   text-shadow: 2px 2px 5px black;
 }
 
+/* 메뉴 */
 #header > nav {
   width: 100%;
   height: 100%;
@@ -45,10 +47,28 @@ body {
 
 #header > nav > ul > li {
   line-height: 3;
+  position: relative;
   margin: 5px;
 }
 
+#header > nav > ul > li::before {
+  content: "";
+  transition: 1s;
+  position: absolute;
+  bottom: 5px;
+  width: 0%;
+  border-bottom: 4px solid rgb(115, 229, 49);
+
+}
+
+#header > nav > ul > li.menu_on::before {
+  width: 100%;
+}
+
+/* 메인 */
+
 #main {
+  position: relative;
   max-width: 1400px;
   margin: 3rem auto 3rem auto;
 }
@@ -60,18 +80,49 @@ body {
 
 /* 홈 화면 */
 .home_page {
+  opacity: 0;
+  transition: 1s;
+  visibility: hidden;
+  width: 100%;
+  position: absolute;
   border: 1px solid black;
 }
 
-.home_background{
-    width: 100%;
-    height: 400px;
-    background-color: greenyellow;
+.home_background {
+  width: 100%;
+  transition: 1s;
+  box-shadow: inset 0 0 5px 3px black;
+  height: 80vh;
+  background-color: greenyellow;
+  background-image: url('../public/images/forest.jpg');
+  background-position: center;
+  background-size: cover;
+  animation: sizeUp 1s 1; 
+}
+
+@keyframes sizeUp {
+  from {
+    background-position: 50% 40%;
+  }
+}
+
+.home_background:hover{
+  box-shadow: inset 0 0 5px 600px rgba(0, 0, 0, 0.263);
 }
 
 /* =============게시판 */
 .list_page {
+  max-width: 800px;
+  transform: translate(-50%);
+  left: 50%;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0;
+  width: 100%;
+  transition: 1s;
   border: 1px solid black;
+  visibility: hidden;
+  position: absolute;
 }
 
 /* 게시판 검색창 */
@@ -109,16 +160,23 @@ body {
 
 /* --------------글작성-------------- */
 
-.writing_modal {
+.writing_page {
+  text-align: center;
+  width: 100%;
+  transition: 1s;
+  visibility: hidden;
+  position: absolute;
   padding: 8px;
 }
 
-.writing_modal label {
+
+
+.writing_page label {
   display: inline-block;
   width: 60px;
 }
 
-.writing_modal input {
+.writing_page input {
   border: none;
   border-bottom: 2px solid black;
   padding: 10px;
@@ -155,9 +213,13 @@ body {
 }
 
 /* 글 수정 */
+
 .update_page {
+  transition: 1s;
+  visibility: hidden;
   border: 1px solid black;
   padding: 10px;
+  position: absolute;
 }
 
 .update_page > input {
@@ -188,6 +250,11 @@ body {
 
 /* 상세내용 페이지 */
 .detail_page {
+  transition: 1s;
+  left: 50%;
+  transform: translate(-50%);
+  visibility: hidden;
+  position: absolute;
   padding: 10px;
   border: 1px solid black;
 }
@@ -196,7 +263,7 @@ body {
   margin: 5px;
 }
 
-.detail_page > p > span {
+.detail_page > div> p > span {
   display: inline-block;
   width: 130px;
   font-weight: 700;
@@ -205,6 +272,7 @@ body {
 
 .detail_button_area {
   margin-top: 1.6rem;
+  text-align: center;
 }
 .detail_button_area > button {
   border: none;
@@ -221,4 +289,13 @@ body {
   width: 600px;
   height: 300px;
   background-color: antiquewhite;
+}
+
+
+tr{
+  border-bottom: 1px solid black;
+}
+
+tr td{
+  padding: 5px;
 }
