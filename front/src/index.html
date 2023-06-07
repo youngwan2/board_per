@@ -1,12 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시판만들기</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header id="header">
+      <h1>My_Home</h1>
+      <nav>
+        <ul>
+          <li><span></span> 홈화면</li>
+          <li><span></span> 게시판</li>
+          <li><span></span> 글작성</li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="home_page">
+        <h1>홈 페이지 입니다.</h1>
+      </section>
+
+      <section class="list_page">
+        <!-- 게시판 -->
+        <h1 class="title"><span></span>게시판</h1>
+        <div class="search_area">
+          <label for="search_input"></label>
+          <input
+            type="text"
+            id="search_input"
+            placeholder="키워드를 입력하세요"
+          />
+          <button id="search_btn">Search</button>
+        </div>
+        <table id="list_table">
+          <tr>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일자</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>잠은 왜 올까</td>
+            <td>거북이</td>
+            <td>10</td>
+            <td>1900-05-03</td>
+          </tr>
+        </table>
+      </section>
+      <article class="writing_modal" style="border: 1px solid black">
+        <h1 class="title">글작성</h1>
+        <form>
+           <label for="text_title">제목</label>
+           <input type="text" id="text_title" placeholder="제목을 입력하세요."></input><br>
+           <label for ="writing_content" id="writing_content_label">내용</label>
+           <textarea id="writing_content" placeholder="내용을 입력하세요".>
+           </textarea><br>
+           <label for="writing_writer">작성자</label>
+           <input id="writing_writer" placeholder="닉네임을 입력하세요"></input><br>
+           <label for="writing_image">이미지</label>
+           <input type="file" id="writing_image">
+           
+           <div class="writing_btn_con">
+              <button type="button" id="regist_btn">등록</button>
+              <button type="button" id="move_btn">목록</button>
+           </div>
+        </form>
+
+      </article>
+
+
+<!-- 상세내용 -->
+<section class="detail_page">
+    <p><span>글번호</span>1</p>
+    <p><span>제목</span>잠은 왜 올까</p>
+    <p><span>조회수</span>10005</p>
+    <p><span>작성자</span>잠탱이 </p>
+    <p><span>작성일시</span>2022-15-9</p>
+    <p><span>내용</span>잠이 오는 이유에 대해 살펴보았다 </p>
+    <figure>    
+      <p>첨부이미지</p>
+        <div class="submit_image">이미지보이는 영역</div>
+    <figure>
+    <article class="detail_button_area">
+       <button class="목록이동">목록</button>
+       <button class="update_btn">수정</button>
+       <button class="del_btn">삭제</button>
+       <button class="prev_btn">이전글</button>
+       <button class="next_btn">다음글</button>
+    <article>
+</section>
+
+
+
+      <!-- 글수정 화면 -->
+      <article class="update_page">
+        <h1 class="title">글수정</h1>
+        <label for="update_input">제목</label><br>
+        <input type="text" id="update_input" placeholder="수정할 제목 입력하쇼"><br><br>
+        <label for="update_content">내용</label><br>
+        <textarea id="update_content" placeholder="수정할 내용을 입력하쇼"></textarea>
+        
+        <div class="update_btn_area">
+            <button class="update_btn">수정</button>
+            <button class="cancle_btn">취소</button>
+        </div>
+      </article>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
 </html>
