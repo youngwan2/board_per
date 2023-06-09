@@ -31,11 +31,12 @@ const layout = document.querySelector(".layout");
 /* 변수 */
 // [현재 카테고리의 인덱스, 현재 게시글의 각 인덱스] =[각각 카운트]
 let [categoryIndex, currentItem] = [0, 0];
+const imageURL=[]
 
 // 로컬에 데이터 존재 안 하면 undefined 이므로 || 뒤의 0 을 할당
 let listId = JSON.parse(localStorage.getItem("data"))?.length ?? 0;
 
-/* 데이터베이스 */
+/* ---------------데이터베이스---------- */
 // 로컬에 이미 존재하는 데이터를 가져와서 database 변수에 할당
 // 만일 로컬에 데이터가 없다면 undefined 이므로 || 연산에 의해 [] 빈배열 할당
 // || 연산자는 좌측값이 falsy 로 인식되면 뒤에 값을 평가한다.
@@ -56,7 +57,7 @@ function storePushFunc() {
     content: wContent.value,
     writer: wWriter.value,
     date: new Date().toLocaleString(),
-    image: "",
+    image: imageURL[0],
     count: 0,
   };
 
@@ -194,7 +195,6 @@ const render = () => {
   listHTML += `<tr><th>글번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일자</th></tr>
   `;
 
-  console.log(database.length);
   for (let i = database.length - 1; i >= 0; i--) {
     listHTML += `
       <tr onclick="detail(${i})">
@@ -218,7 +218,6 @@ const detail = (i) => {
   homePage.style.cssText = `visibility:hidden; opacity:0`;
   listPage.style.cssText = `visibility:hidden; opacity:0`;
   reload();
-  console.log(database[i]);
   const detailHTML = `
 <p><span>글번호</span>${1 * database[i].id + 1}</p>
 <p><span>제목</span>${database[i].title}</p>
@@ -229,7 +228,7 @@ const detail = (i) => {
 <figure>    
   <p>첨부이미지</p>
     <div class="submit_image">
-      <img src="${database[i].image} alt="image"></img>
+      <img src="${database[i].image}" width="100%" height="430px" alt="image"></img>
     </div>
 <figure>
 `;
@@ -410,7 +409,6 @@ render();
 
 function reload() {
   const json = JSON.stringify(database);
-  console.log(listId);
   localStorage.setItem("data", json);
   render(database);
 }
@@ -425,24 +423,24 @@ searchInput.addEventListener("keyup", (e) => {
   search(searchValue, database);
 });
 
-searchBtn.addEventListener('click',()=>{
-  document.getElementById('list_modal').classList.add('modal_on')
-})
+searchBtn.addEventListener("click", () => {
+  document.getElementById("list_modal").classList.add("modal_on");
+});
 
 function search(searchValue, database) {
   /* g: 패턴과 일치하는 모든 대상을 검색 
    i: 대소문자 구분을 무시하고 검색한다.
 */
   const regexp = new RegExp(searchValue, "gi");
-  const filteredList=[]
+  const filteredList = [];
 
   for (let i = 0; i < database.length; i++) {
-    if(regexp.test(database[i].title)){
-      filteredList.push(database[i])
-    };
+    if (regexp.test(database[i].title)) {
+      filteredList.push(database[i]);
+    }
   }
 
-  filterListModal(filteredList)
+  filterListModal(filteredList);
 }
 
 /* 필터된 리스트를 그리는 함수 */
@@ -469,9 +467,19 @@ function filterListModal(database) {
   document.getElementById("list_modal").innerHTML = listHTML;
 }
 
-function closeListModal(){
-  document.getElementById('list_modal').classList.toggle('modal_on')
+function closeListModal() {
+  document.getElementById("list_modal").classList.toggle("modal_on");
 }
 
-const reader = new FileReader();
-// console.log(reader.readAsText(wImage.file[0]))
+// 이미지 읽어와서 미리보기로 보여줌
+
+
+
+function imageReader(e) {
+  const reader = new FileReader();
+  reader.readAsDataURL(e.target.files[0]);
+  reader.addEventListener("load", (e) => {
+    imageURL.push(e.target.result)
+  });
+}
+wImage.addEventListener("change", imageReader);
