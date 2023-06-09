@@ -19,13 +19,13 @@ const wContent = document.getElementById("writing_content");
 const wWriter = document.getElementById("writing_writer");
 const wImage = document.getElementById("writing_image");
 const wRegistBtn = document.getElementById("regist_btn");
-wWriter.value = JSON.parse(sessionStorage.getItem('user'))?.username
 
 /* 로그인 쿼리 */
 const username = document.getElementById('username')
 const password = document.getElementById('pw')
 const loginIcon = document.querySelector(".login_icon")
-loginIcon.textContent = 'login'
+
+
 
 /* 레이아웃 쿼리 */
 const layout = document.querySelector('.layout')
@@ -46,7 +46,8 @@ const database = localData;
 
 /* 데이터베이스에 데이터를 전송하는 함수 */
 function storePushFunc() {
-  const loginUsername = JSON.parse(sessionStorage.getItem('user'))
+  login()
+  const loginUsername = JSON.parse(sessionStorage.getItem('user')).username
   const data = {
     id: listId++,
     title: wUserInput.value,
@@ -136,27 +137,37 @@ const board = () => {
   updatePage.style.cssText = `visibility:hidden; opacity:0`;
 };
 
-/* 글쓰기 페이지 */
-const writing = () => {
+function accessControl(){
   const isLogin = JSON.parse(sessionStorage.getItem('user'))?.isLogin || false
   if (!isLogin) {
     alert("로그인 하세요")
+    home()
+    menuFocus(0)
     return loginToggle();
   }
+}
+
+/* 글쓰기 페이지 */
+const writing = () => {
   writingPage.style.cssText = `visibility:visible; opacity:1`;
   homePage.style.cssText = `visibility:hidden; opacity:0`;
   listPage.style.cssText = `visibility:hidden; opacity:0`;
   detailPage.style.cssText = `visibility:hidden; opacity:0`;
   updatePage.style.cssText = `visibility:hidden; opacity:0`;
+
+  accessControl(); // 접근 권한를 통제하는 함수(가짜 미들웨어 역할)
 };
 
 /* 글수정 페이지 */
 const update = () => {
+
   updatePage.style.cssText = `visibility:visible; opacity:1`;
   writingPage.style.cssText = `visibility:hidden; opacity:0`;
   homePage.style.cssText = `visibility:hidden; opacity:0`;
   listPage.style.cssText = `visibility:hidden; opacity:0`;
   detailPage.style.cssText = `visibility:hidden; opacity:0`;
+
+  accessControl(); // 접근 권한를 통제하는 함수(가짜 미들웨어 역할)
 }
 
 /*  게시판으로 이동 */
@@ -243,6 +254,14 @@ function updateFunc() {
 
 /* 글 삭제 함수 */
 function deleteFunc() {
+  const isLogin = JSON.parse(sessionStorage.getItem('user'))?.isLogin || false
+  if (!isLogin) {
+    alert("로그인 하세요")
+    home()
+    menuFocus(0)
+    return loginToggle();
+  }
+
   database.splice(currentItem, 1)
   reload();
   board();
@@ -310,6 +329,24 @@ function logout() {
 
 function loginMessage() {
   document.querySelector('.login_icon').textContent = sessionStorage.getItem('login');
+
+
+  const username = JSON.parse(sessionStorage.getItem('user')).username
+  const div = document.createElement('div')
+  const text = document.createTextNode(`환영합니다. ${username} 님! 현재 시간은 ${new Date().toLocaleString()} 입니다.`)
+
+  //  안내 메시지 생성
+  div.appendChild(text)
+  div.classList.add('welcome_message')
+  document.body.appendChild(div)
+
+  // 안내 메시지 4초 뒤에 숨기기
+  setTimeout(() => {
+    div.style.cssText = `
+    visibility:"hidden";
+    opacity: 0;
+    `
+  }, 4000)
 }
 
 
@@ -385,6 +422,11 @@ function reload() {
 // })()
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  loginIcon.textContent = sessionStorage.getItem('login');
+  const username = JSON.parse(sessionStorage.getItem('user')).username
+  wWriter.value = username
+})
 
 const reader = new FileReader();
 // console.log(reader.readAsText(wImage.file[0]))

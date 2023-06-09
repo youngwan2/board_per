@@ -112,15 +112,35 @@ input:focus{
 /* 로그인 폼 */
 
 .login_icon {
-  margin: 10px;
+  margin: 10px 20px 10px 10px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 1.5px;
 }
+
+.login_icon::before{  
+  content: "";
+  position:absolute;
+  bottom: 10px;
+  border-bottom: 3px solid rgba(172, 255, 47, 0.79);
+  width:0%;
+
+  transition: 1s;
+
+}
+.login_icon:hover::before{
+  content: "";
+  width: 40px;
+
+}
+
 .login_form {
   transition: 1s;
   visibility: hidden;
   opacity: 0;
   box-shadow: 2px 2px 5px black;
   border-radius: 5px;
-  position: absolute;
+  position: fixed;
   background-color: white;
   max-width: 600px;
   min-width: 350px;
@@ -249,8 +269,10 @@ input:focus{
 }
 #search_input {
   width: 100%;
+  transition: 1s;
   max-width: 400px;
   text-align: center;
+  border:none;
   padding: 10px;
   margin: 0 auto;
 }
@@ -450,6 +472,24 @@ tr {
 
 tr td {
   padding: 5px;
+}
+
+
+/* 로그인 시 환영 메시지 */
+.welcome_message{
+  background-color:rgba(0, 0, 0, 0.596);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color:white;
+  transition: 1s;
+  top: 3.5rem;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-size: large;
+  
 }
 
 /* 미디어 쿼리 */
