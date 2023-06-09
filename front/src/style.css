@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@100;300;400;700&display=swap");
+
+/* 공통 적용 */
 * {
   margin: 0;
 }
@@ -14,24 +17,66 @@ body {
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
+  font-family: "Gowun Dodum", sans-serif;
+}
+
+:is(input, textarea):focus {
+  outline-color: green;
+  border: none !important;
+  padding: 5px;
+}
+
+button {
+  transition: 0.3s !important;
+}
+
+button:hover {
+  background-color: green !important;
+  cursor: pointer;
+}
+
+textarea{
+  border: none;
+  padding: 10px;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.63);
+}
+textarea:focus{
+  outline: none;
+  background-color: rgb(224, 245, 192);
+  padding: 10px;
+}
+
+:is(input,textarea){
+  transition: 1s;
+  border-bottom: 1px solid gray !important;
+  width: 90% !important;
+  margin: 1rem 0;
+}
+
+input:focus{
+  outline: none !important;
+  background-color: rgb(224, 245, 192);
+}
+:is(input,textarea)::placeholder{
+  color:black
 }
 
 /* --------헤더 */
 #header {
-  padding: 5px;
   display: flex;
   align-items: center;
   position: relative;
   width: 100%;
-  height: 50px;
+  height: 60px;
   background-color: rgb(28, 165, 83);
   color: white;
   box-shadow: 1px 1px 5px black;
 }
 
-/* 홈로고 */
+/* 사이트 로고 */
 #header h1 {
   text-shadow: 2px 2px 5px black;
+  margin-left: 1rem;
 }
 
 /* 메뉴 */
@@ -58,15 +103,84 @@ body {
   bottom: 5px;
   width: 0%;
   border-bottom: 4px solid rgb(115, 229, 49);
-
 }
 
 #header > nav > ul > li.menu_on::before {
   width: 100%;
 }
 
-/* 메인 */
+/* 로그인 폼 */
 
+.login_icon {
+  margin: 10px;
+}
+.login_form {
+  transition: 1s;
+  visibility: hidden;
+  opacity: 0;
+  box-shadow: 2px 2px 5px black;
+  border-radius: 5px;
+  position: absolute;
+  background-color: white;
+  max-width: 600px;
+  min-width: 350px;
+  height: 400px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.3);
+  text-align: center;
+}
+
+.login_form.login_on {
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 100;
+}
+.layout {
+  visibility: hidden;
+  opacity: 0;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.301);
+  height: 100vh;
+}
+.layout.layout_on {
+  visibility: visible;
+  opacity: 1;
+}
+
+.login_title {
+  margin-top: 4rem;
+}
+
+.login_inner_con {
+  position: relative;
+  top: 10%;
+}
+
+.login_form input {
+  padding: 10px;
+  border-radius: 1px;
+  border: none;
+  border-bottom: 2px solid black;
+}
+.login_form label {
+  display: inline-block;
+  width: 60px;
+}
+
+.login_form button {
+  margin-top: 2rem;
+  padding: 5px 10px;
+  border: none;
+  background-color: black;
+  color: white;
+}
+
+/* 메인 */
 #main {
   position: relative;
   max-width: 1400px;
@@ -75,7 +189,9 @@ body {
 
 /* title */
 .title {
-  margin: 10px;
+  margin: 30px 0;
+  width: 100%;
+  font-family: "Gowun Dodum", sans-serif;
 }
 
 /* 홈 화면 */
@@ -91,13 +207,13 @@ body {
 .home_background {
   width: 100%;
   transition: 1s;
-  box-shadow: inset 0 0 5px 3px black;
-  height: 80vh;
+  box-shadow: inset 0 0 5px 3px black, inset 0 0 0 0 black;
+  height: 85vh;
   background-color: greenyellow;
-  background-image: url('../public/images/forest.jpg');
+  background-image: url("../public/images/forest.jpg");
   background-position: center;
   background-size: cover;
-  animation: sizeUp 1s 1; 
+  animation: sizeUp 1s 1;
 }
 
 @keyframes sizeUp {
@@ -106,8 +222,10 @@ body {
   }
 }
 
-.home_background:hover{
-  box-shadow: inset 0 0 5px 600px rgba(0, 0, 0, 0.263);
+.home_background:hover {
+  box-shadow: inset 0 50px 5px 0px rgba(0, 0, 0, 0.933),
+    inset 0 -50px 5px 0px rgba(0, 0, 0, 0.924);
+  filter: blur(2px);
 }
 
 /* =============게시판 */
@@ -120,7 +238,6 @@ body {
   opacity: 0;
   width: 100%;
   transition: 1s;
-  border: 1px solid black;
   visibility: hidden;
   position: absolute;
 }
@@ -146,59 +263,75 @@ body {
 }
 
 /* 게시판 리스트  */
-#list_table {
+.list_page #list_table {
+  margin: 50px 0;
   text-align: center;
   width: 100%;
   border-collapse: collapse;
 }
 
-#list_table th {
+.list_page #list_table th {
   color: white;
   padding: 5px;
   background-color: rgb(0, 0, 0);
 }
 
+.list_page > button {
+  background-color: black;
+  color: white;
+  border: none;
+  margin: 10px;
+  padding: 5px;
+}
+
 /* --------------글작성-------------- */
 
 .writing_page {
-  text-align: center;
-  width: 100%;
+  width: 50%;
+  left: 50%;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.356);
+  transform: translate(-50%);
   transition: 1s;
   visibility: hidden;
   position: absolute;
   padding: 8px;
 }
-
-
+.writing_page h1 {
+  text-align: center;
+}
 
 .writing_page label {
   display: inline-block;
-  width: 60px;
+  min-width: 60px;
+  font-weight: 700;
+  margin: 1rem 0;
 }
 
 .writing_page input {
   border: none;
   border-bottom: 2px solid black;
   padding: 10px;
-  width: 600px;
+  width: 85%;
 }
 
 #writing_content_label {
-  position: relative;
   top: -13.5rem;
+  vertical-align: top;
+  
 }
 
 #writing_content {
   margin: 5px 0;
   resize: none;
   min-width: 200px;
+  width: 95%;
   min-height: 400px;
-  width: 630px;
-  max-width: 614px;
+  max-width: 575px;
 }
 
 .writing_btn_con {
   margin-top: 1rem;
+  text-align: center;
 }
 
 .writing_btn_con > button {
@@ -213,13 +346,23 @@ body {
 }
 
 /* 글 수정 */
-
 .update_page {
+  text-align: start;
   transition: 1s;
   visibility: hidden;
-  border: 1px solid black;
   padding: 10px;
+  width: 50%;
   position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.update_page label{
+  font-weight: 700;
+}
+
+.update_page h1 {
+  text-align: center;
 }
 
 .update_page > input {
@@ -240,7 +383,9 @@ body {
   width: 630px;
   max-width: 614px;
 }
-
+.update_btn_area {
+  text-align: center;
+}
 .update_btn_area > button {
   border: none;
   background-color: black;
@@ -252,18 +397,20 @@ body {
 .detail_page {
   transition: 1s;
   left: 50%;
+  width: 50%;
+  min-width: 330px;
   transform: translate(-50%);
   visibility: hidden;
   position: absolute;
   padding: 10px;
-  border: 1px solid black;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.408);
 }
 
 .detail_page :is(p, figure) {
   margin: 5px;
 }
 
-.detail_page > div> p > span {
+.detail_page > div > p > span {
   display: inline-block;
   width: 130px;
   font-weight: 700;
@@ -286,16 +433,33 @@ body {
 }
 
 .submit_image {
-  width: 600px;
+  max-width: 600px;
+  min-width: 300px;
   height: 300px;
   background-color: antiquewhite;
 }
 
+figure>p{
+  font-weight: 700;
+  margin-left: 0;
+}
 
-tr{
+tr {
   border-bottom: 1px solid black;
 }
 
-tr td{
+tr td {
   padding: 5px;
+}
+
+/* 미디어 쿼리 */
+@media screen and (max-width: 704px) {
+  #writing_content_label {
+    position: static;
+  }
+
+  label {
+    margin: 5px;
+    font-weight: 700;
+  }
 }

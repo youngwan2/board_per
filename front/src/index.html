@@ -9,7 +9,7 @@
   </head>
   <body>
     <header id="header">
-      <h1>My_Home</h1>
+      <h1 class="home_logo">My_Home</h1>
       <nav>
         <ul class="category_ul">
           <li data-id="home"><span></span> 홈화면</li>
@@ -17,6 +17,9 @@
           <li data-id="writing"><span></span> 글작성</li>
         </ul>
       </nav>
+      <article>
+        <div class="login_icon">login</div>
+      </article>
     </header>
     <main id="main">
       <section class="home_page">
@@ -38,26 +41,26 @@
         <table id="list_table">
 
           <tr>
-            <td>1</td>
+            <!-- <td>1</td>
             <td>잠은 왜 올까</td>
             <td>거북이</td>
             <td>10</td>
-            <td>1900-05-03</td>
+            <td>1900-05-03</td> -->
           </tr>
         </table>
+        <button class="writing_btn">글쓰기</button>
       </section>
 
       <!-- 글작성 -->
       <article class="writing_page" style="border: 1px solid black">
-        <h1 class="title">글작성</h1>
+        <h1 class="title">글쓰기</h1>
         <form>
            <label for="text_title">제목</label>
            <input type="text" id="text_title" placeholder="제목을 입력하세요."></input><br>
-           <label for ="writing_content" id="writing_content_label">내용</label>
-           <textarea id="writing_content" placeholder="내용을 입력하세요".>
-           </textarea><br>
+           <label for ="writing_content" id="writing_content_label">내용</label><br>
+           <textarea id="writing_content" placeholder="내용을 입력하세요".></textarea><br>
            <label for="writing_writer">작성자</label>
-           <input id="writing_writer" placeholder="닉네임을 입력하세요"></input><br>
+           <input id="writing_writer" readonly ></input><br>
            <label for="writing_image">이미지</label>
            <input type="file" id="writing_image">
            
@@ -94,11 +97,31 @@
         <textarea id="update_content" placeholder="수정할 내용을 입력하쇼"></textarea>
         
         <div class="update_btn_area">
-            <button class="update_btn">수정</button>
+            <button class="update_btn update">수정</button>
             <button class="cancle_btn">취소</button>
         </div>
       </article>
     </main>
+
+<!-------- 참고) 패스워드 유효성 코드 패턴 의미 ------->
+<!-- 
+(?=.*\d) : 숫자가 최소 1개 이상. (※ 세부설명: ① (?=...) : 전방 탐색(lookahead : 다음 문자열을 미리 확인) 의미. / ② .*는 임의의 문자열 의미. / ③ \d는 숫자 의미.)
+(?=.*[a-z]) : 소문자 최소 1개 이상 의미. (※ 세부설명: [a-z]는 소문자 나타내는 문자 범위)
+(?=.*[A-Z]) : 대문자 최소 1개 이상 의미. (※ 세부설명: [A-Z]는 대문자 나타내는 문자 범위)
+.{8,} : 최소 8자 이상 의미. (※ 세부설명: .(마침표)는 임의의 문자를 의미하며, {8,}는 이전 문자가 8번 이상 반복될 수 있음 의미.)
+ -->
+
+  <form class="login_form">
+      <h2 class="login_title">로그인</h2>
+      <div class="login_inner_con">
+      <label for="username">닉네임</label>
+      <input type="text" placeholder="닉네임(최소 4글자 이상)" autocomplete="nickname" id="username" required pattern="[a-zA-Z0-9]{4,}"><br>
+      <label for="pw">비밀번호</label>
+      <input type="password" id="pw" autocomplete="current-password" placeholder="숫자/소/대문자 각 1자 이상 포함(8자 이상)" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+      <button type="submit" class="login_sumbit_btn">로그인</button>
+    </div>
+  </form>
+    <div class="layout"></div>
 
     <script src="./app.js"></script>
   </body>
