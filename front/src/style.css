@@ -42,10 +42,11 @@ body::-webkit-scrollbar-thumb{
 
 button {
   transition: 0.3s !important;
+  border-radius: 5px;
 }
 
 button:hover {
-  background-color: green !important;
+  background-color: rgb(9, 180, 9) !important;
   cursor: pointer;
 }
 
@@ -264,7 +265,7 @@ input:focus{
 
 /* =============게시판 */
 .list_page {
-  max-width: 800px;
+  max-width: 1600px;
   transform: translate(-50%);
   left: 50%;
   margin: 0 auto;
@@ -276,17 +277,66 @@ input:focus{
   position: absolute;
 }
 
+.list_page button{
+  margin: 0 !important;
+  padding: 12px !important;
+}
+
 /* 필터된 게시판 리스트 */
 #list_modal{
-  width: 70%;
-  height: 400px;
-  background-color: rgba(218, 165, 32, 0.66);
-  border: 1px solid black;
+  transition: 1s;
+  visibility: hidden;
+  opacity: 0;
+  width: 90%;
+  border-radius: 5px;
+ padding: 5px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(176, 170, 170);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.24);
   position: fixed;
   left: 50%;
-  top: 90%;
+  top: 40%;
   transform: translate(-50%,-50%);
 }
+
+#list_modal.modal_on{
+  z-index: 100;
+  visibility: visible;
+  opacity: 1;
+}
+
+
+#list_modal th{
+  padding: 5px;
+  background-color: rgb(34, 193, 34);
+  color: white;
+
+}
+
+#list_modal tr:nth-child(2n-1){
+  background-color: rgba(242, 236, 236, 0.335);
+}
+#list_modal td{
+  color: rgb(57, 56, 56);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.53);
+}
+
+#list_modal button{
+  margin-top: 1rem;
+  position: absolute;
+  border-radius: 5px;
+  padding: 2px;
+  border: none;
+  background-color: black;
+  color:white;
+  width: 35px;
+  height: 35px;
+  right: 5px;
+  top: -3.5rem;
+
+}
+
 /* 게시판 검색창 */
 
 .search_area {
@@ -373,7 +423,7 @@ input:focus{
   min-width: 200px;
   width: 95%;
   min-height: 400px;
-  max-width: 575px;
+  max-width: 640px;
 }
 
 .writing_btn_con {
@@ -443,8 +493,9 @@ input:focus{
 /* 상세내용 페이지 */
 .detail_page {
   transition: 1s;
+  background-color: rgb(255, 255, 255);
   left: 50%;
-  width: 50%;
+  width: 90%;
   min-width: 330px;
   transform: translate(-50%);
   visibility: hidden;
@@ -455,13 +506,25 @@ input:focus{
 
 .detail_page :is(p, figure) {
   margin: 5px;
+
+}
+
+.detail_page figure{
+  padding: 5px;
+}
+
+.detail_page > div > p{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.233);
+  padding: 5px;
 }
 
 .detail_page > div > p > span {
   display: inline-block;
+  border-right: 3px solid black;
   width: 130px;
   font-weight: 700;
   padding: 0 8px 0 0;
+  margin-right: 10px;
 }
 
 .detail_button_area {
@@ -472,7 +535,7 @@ input:focus{
   border: none;
   background-color: black;
   color: white;
-  padding: 5px;
+  padding: 12px;
 }
 
 .detail_button_area > button:hover {
@@ -480,10 +543,12 @@ input:focus{
 }
 
 .submit_image {
-  max-width: 600px;
+  width: 80%;
+  margin: 0 auto;
   min-width: 300px;
-  height: 300px;
-  background-color: antiquewhite;
+  text-align: center;
+  height: 400px;
+  background-color: rgba(169, 242, 124, 0.501);
 }
 
 figure>p{
