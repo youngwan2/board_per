@@ -9,6 +9,7 @@
   </head>
   <body>
     <header id="header">
+    
       <h1 class="home_logo">My_Home</h1>
       <nav>
         <ul class="category_ul">
@@ -20,6 +21,7 @@
       <article>
         <div class="login_icon">login</div>
       </article>
+
     </header>
     <main id="main">
       <section class="home_page">
@@ -51,6 +53,11 @@
         <button class="writing_btn">글쓰기</button>
       </section>
 
+           <!-- 검색으로 필터된 리스트(모달) -->
+           <table id="list_modal">
+
+           </table>
+
       <!-- 글작성 -->
       <article class="writing_page" style="border: 1px solid black">
         <h1 class="title">글쓰기</h1>
@@ -60,7 +67,7 @@
            <label for ="writing_content" id="writing_content_label">내용</label><br>
            <textarea id="writing_content" placeholder="내용을 입력하세요".></textarea><br>
            <label for="writing_writer">작성자</label>
-           <input id="writing_writer" readonly ></input><br>
+           <input id="writing_writer" ></input><br>
            <label for="writing_image">이미지</label>
            <input type="file" id="writing_image">
            
@@ -70,7 +77,7 @@
            </div>
         </form>
       </article>
-
+ 
 
 <!-- 상세내용 -->
 <section class="detail_page">
@@ -122,7 +129,6 @@
     </div>
   </form>
     <div class="layout"></div>
-
     <script src="./app.js"></script>
   </body>
 </html>

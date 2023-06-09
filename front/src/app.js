@@ -42,17 +42,19 @@ let listId = JSON.parse(localStorage.getItem("data"))?.length ?? 0;
 // 만일 로컬에 데이터가 없다면 undefined 이므로 || 연산에 의해 [] 빈배열 할당
 // || 연산자는 좌측값이 falsy 로 인식되면 뒤에 값을 평가한다.
 const localData = JSON.parse(localStorage.getItem("data")) || [];
+const loginUsername = JSON.parse(sessionStorage.getItem('user'))
 const database = localData;
+
+const nickname = JSON.parse(sessionStorage.getItem('user'))?.username ||{username:wWriter.value}.username
+wWriter.value = nickname
 
 /* 데이터베이스에 데이터를 전송하는 함수 */
 function storePushFunc() {
-  login()
-  const loginUsername = JSON.parse(sessionStorage.getItem('user')).username
   const data = {
     id: listId++,
     title: wUserInput.value,
     content: wContent.value,
-    writer: loginUsername,
+    writer: wWriter.value,
     date: new Date().toLocaleString(),
     image: '',
     count: 0
@@ -60,6 +62,8 @@ function storePushFunc() {
 
   database.push(data);
   reload();
+
+  [wUserInput.value, wContent.value, wWriter.value] = ['', '', '']
 }
 
 
@@ -137,7 +141,7 @@ const board = () => {
   updatePage.style.cssText = `visibility:hidden; opacity:0`;
 };
 
-function accessControl(){
+function accessControl() {
   const isLogin = JSON.parse(sessionStorage.getItem('user'))?.isLogin || false
   if (!isLogin) {
     alert("로그인 하세요")
@@ -186,8 +190,6 @@ wRegistBtn.addEventListener("click", () => {
   storePushFunc();
   board();
   menuFocus(1);
-
-  [wUserInput.value, wContent.value, wWriter.value] = ['', '', '']
 });
 
 /* 게시판 렌더 함수 */
@@ -290,7 +292,6 @@ document.querySelector('.login_form').addEventListener('submit', (e) => {
   e.preventDefault();
 })
 
-
 /* 로그인 */
 function login() {
   const userInfo = {
@@ -349,9 +350,9 @@ function loginMessage() {
   }, 4000)
 }
 
-
-// loginMessage()
-
+document.addEventListener('DOMContentLoaded', () => {
+  loginIcon.textContent = sessionStorage.getItem('login')??'login';
+})
 
 /* 로그인 토글  */
 function loginToggle() {
@@ -422,11 +423,56 @@ function reload() {
 // })()
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  loginIcon.textContent = sessionStorage.getItem('login');
-  const username = JSON.parse(sessionStorage.getItem('user')).username
-  wWriter.value = username
+/* 검색 기능 */
+const searchInput = document.getElementById('search_input');
+const searchBtn = document.getElementById('search_btn')
+
+searchInput.addEventListener('keyup', (e) => {
+  const searchValue = e.target.value;
+  search(searchValue, database)
 })
+
+function search(searchValue, database) {
+  const userInput = searchValue
+  console.log(userInput)
+/* g: 패턴과 일치하는 모든 대상을 검색 
+   i: 대소문자 구분을 무시하고 검색한다.
+*/
+  const jugement = new RegExp(userInput,"gi")
+  console.log(jugement)
+
+  for (let i = 0; i < database.length; i++) {
+      if(database[i].title.match(jugement)){
+        filterListModal(database)
+      }
+  }
+}
+
+function filterListModal(database){
+  let listHTML = "";
+
+  listHTML += `<tr><th>글번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일자</th></tr>
+  `;
+
+  database.map((_,i)=>{
+
+    return (
+      listHTML += `
+      <tr onclick="detail(${i})">
+          <td>${1 * database[i].id + 1}</td>
+          <td>${database[i].title}</td>
+          <td>${database[i].writer}</td>
+          <td><span>${database[i].count}<span></td>
+          <td>${database[i].date}</td>
+      </tr>
+      <button class="cancle_btn">닫기</button>
+    `
+    )
+  })
+  
+  
+  document.getElementById("list_modal").innerHTML = listHTML;
+}
 
 const reader = new FileReader();
 // console.log(reader.readAsText(wImage.file[0]))
