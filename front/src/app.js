@@ -104,6 +104,7 @@ const board = () => {
 };
 
 function accessControl() {
+  // 유저의 로그인 데이터가 존재하지 않는다면 로그인하라는 문구와 동시에 로그인 모달창이 뜨며, 홈으로 이동
   const isLogin = JSON.parse(sessionStorage.getItem("user"))?.isLogin || false;
   if (!isLogin) {
     alert("로그인 하세요");
@@ -115,6 +116,7 @@ function accessControl() {
 /* 글쓰기 페이지 */
 const writing = () => {
   window.scrollTo({ top: section[2].offsetTop - 30, behavior: "smooth" });
+  accessControl(); // 접근 권한를 통제하는 함수(가짜 미들웨어 역할)
 };
 
 /* 글수정 페이지 */
