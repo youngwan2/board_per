@@ -1,37 +1,9 @@
 // (() => {
-/* 헤더 쿼리 */
-const categories = document.querySelector(".category_ul");
-const categoriesLi = document.querySelectorAll(".category_ul>li");
-
-/* 메인 쿼리 */
-const main = document.getElementById("main");
-
-/* 페이지 쿼리 */
-const homePage = document.querySelector(".home_page");
-const listPage = document.querySelector(".list_page");
-const writingPage = document.querySelector(".writing_page");
-const detailPage = document.querySelector(".detail_page");
-const updatePage = document.querySelector(".update_page");
-
-/* 글쓰기 쿼리 */
-const wUserInput = document.getElementById("text_title");
-const wContent = document.getElementById("writing_content");
-const wWriter = document.getElementById("writing_writer");
-const wImage = document.getElementById("writing_image");
-const wRegistBtn = document.getElementById("regist_btn");
-
-/* 로그인 쿼리 */
-const username = document.getElementById("username");
-const password = document.getElementById("pw");
-const loginIcon = document.querySelector(".login_icon");
-
-/* 레이아웃 쿼리 */
-const layout = document.querySelector(".layout");
 
 /* 변수 */
 // [현재 카테고리의 인덱스, 현재 게시글의 각 인덱스] =[각각 카운트]
 let [categoryIndex, currentItem] = [0, 0];
-const imageURL=[]
+const imageURL = [];
 
 // 로컬에 데이터 존재 안 하면 undefined 이므로 || 뒤의 0 을 할당
 let listId = JSON.parse(localStorage.getItem("data"))?.length ?? 0;
@@ -74,8 +46,9 @@ const state = (() => {
     return loginState;
   }
 
-  return loginHandler;
+  return { loginHandler};
 })();
+
 
 /* 메뉴(카테고리) 클릭 시 포커스 유지하는 함수 */
 function menuFocus(categoryIndex) {
@@ -91,7 +64,7 @@ categories.addEventListener("click", (e) => {
   pageChange(e.target);
 });
 
-// 페이지을 처리하는 함수
+// 페이지를 처리하는 함수
 const pageChange = (category) => {
   const menu = category.dataset.id;
   switch (menu) {
@@ -228,7 +201,9 @@ const detail = (i) => {
 <figure>    
   <p>첨부이미지</p>
     <div class="submit_image">
-      <img src="${database[i].image}" width="100%" height="430px" alt="image"></img>
+      <img src="${
+        database[i].image
+      }" width="100%" height="430px" alt="image"></img>
     </div>
 <figure>
 `;
@@ -285,40 +260,50 @@ document.querySelector(".login_form").addEventListener("submit", (e) => {
   e.preventDefault();
 });
 
-/* 로그인 */
-function login() {
-  const userInfo = {
-    isLogin: state(true),
-    username: username.value,
-    password: password.value,
-  };
 
-  const user = JSON.stringify(userInfo);
-  sessionStorage.setItem("user", user);
+/* 로그인 정보 입력 */
+username.addEventListener("keyup", (e) => {
+  loginState.userInfo.username =e.target.value
 
-  // input 초기화
-  [userInfo.username, userInfo.password] = ["", ""];
+});
+password.addEventListener("keyup", (e) => {
+  loginState.userInfo.password=e.target.value
 
-  const isLogin = JSON.parse(sessionStorage.getItem("user")).isLogin || "login";
-  if (isLogin) {
-    sessionStorage.setItem("login", "logout");
-  }
+});
 
-  loginMessage();
+/* ==========로그인/로그아웃 관리============ */
+const loginState = {
+  userInfo: {
+    isLogin: state.loginHandler(true),
+    username: '',
+    password: '',
+  },
 
-  home();
-  menuFocus(0);
-}
+  /* 로그인 */
+  login() {
+    const user = JSON.stringify(this.userInfo);
+    sessionStorage.setItem("user", user);
 
-/* 로그아웃 처리 */
-function logout() {
-  sessionStorage.removeItem("user"); // 세션 저장소 유저 정보 제거
-  sessionStorage.setItem("login", "login"); // 로그인 메시지 업데이트
-  loginIcon.innerHTML = sessionStorage.getItem("login"); // 이하동문
+    // input 초기화
+    [this.userInfo.username, this.userInfo.password] = ["", ""];
 
-  home();
-  menuFocus(0);
-}
+    const isLogin =
+      JSON.parse(sessionStorage.getItem("user")).isLogin || "login";
+    isLogin && sessionStorage.setItem("login", "logout");
+
+    loginMessage();
+    homeShift();
+  },
+
+  /* 로그아웃 */
+  logout() {
+    sessionStorage.removeItem("user"); // 세션 저장소 유저 정보 제거
+    sessionStorage.setItem("login", "login"); // 로그인 메시지 업데이트
+    loginIcon.innerHTML = sessionStorage.getItem("login"); // 이하동문
+
+    homeShift();
+  },
+};
 
 function loginMessage() {
   document.querySelector(".login_icon").textContent =
@@ -360,7 +345,7 @@ document.querySelector(".next_btn").addEventListener("click", nextBtn);
 document.querySelector(".update_btn").addEventListener("click", update); // 수정 페이지 이동
 document.querySelector(".update").addEventListener("click", updateFunc);
 document.querySelector(".del_btn").addEventListener("click", deleteFunc);
-document.querySelector(".cancle_btn").addEventListener("click", board);
+document.querySelector(".cancel_btn").addEventListener("click", board);
 document.querySelector(".writing_btn").addEventListener("click", writing);
 document.querySelector(".home_logo").addEventListener("click", () => {
   home();
@@ -376,7 +361,7 @@ loginIcon.addEventListener("click", () => {
     const isLogin = JSON.parse(sessionStorage.getItem("user"))?.isLogin;
 
     // null 이면 뒤에 것을 실행하지 않는다. true 라면 뒤에 함수를 실행한다.
-    isLogin && logout();
+    isLogin && loginState.logout();
   } catch (error) {
     console.log(error + "는 넘어가도 됩니다.");
   }
@@ -395,7 +380,7 @@ function loginRegex() {
 
   // 닉네임과 패스워드 정규식 검사가 모두 참이라면 login 처리
   if (unJudgement && pwJudgement) {
-    login();
+    loginState.login();
     loginToggle();
   }
 }
@@ -467,19 +452,28 @@ function filterListModal(database) {
   document.getElementById("list_modal").innerHTML = listHTML;
 }
 
+/* ==========기타 등등 */
 function closeListModal() {
   document.getElementById("list_modal").classList.toggle("modal_on");
 }
 
+function homeShift() {
+  home();
+  menuFocus(0);
+}
+
 // 이미지 읽어와서 미리보기로 보여줌
-
-
-
 function imageReader(e) {
   const reader = new FileReader();
   reader.readAsDataURL(e.target.files[0]);
   reader.addEventListener("load", (e) => {
-    imageURL.push(e.target.result)
+    imageURL.push(e.target.result);
   });
 }
 wImage.addEventListener("change", imageReader);
+
+// 메뉴 아이콘 조작
+menuIcon.addEventListener('click',()=>{
+  categoriesNav.classList.toggle('menu_on')
+})
+

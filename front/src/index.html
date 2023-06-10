@@ -11,24 +11,25 @@
     <header id="header">
     
       <h1 class="home_logo">My_Home</h1>
-      <nav>
+      <nav id="category_nav">
         <ul class="category_ul">
           <li data-id="home"><span></span> 홈화면</li>
           <li data-id="board"><span></span> 게시판</li>
           <li data-id="writing"><span></span> 글작성</li>
         </ul>
       </nav>
-      <article>
+      <article class="etc">
+        <span id="menu_icon">☰</span>
         <div class="login_icon">login</div>
       </article>
 
     </header>
     <main id="main">
-      <section class="home_page">
+      <section class="home_page page_con">
         <div class="home_background"></div>
       </section>
 
-      <section class="list_page">
+      <section class="list_page page_con">
         <!-- 게시판 -->
         <h1 class="title"><span></span>게시판</h1>
         <div class="search_area">
@@ -59,12 +60,12 @@
            </table>
 
       <!-- 글작성 -->
-      <article class="writing_page" style="border: 1px solid black">
+      <section class="writing_page page_con" style="border: 1px solid black">
         <h1 class="title">글쓰기</h1>
         <form>
            <label for="text_title">제목</label>
            <input type="text" id="text_title" placeholder="제목을 입력하세요."></input><br>
-           <label for ="writing_content" id="writing_content_label">내용</label><br>
+           <label for ="writing_content" id="writing_content_label">내용</label>
            <textarea id="writing_content" placeholder="내용을 입력하세요".></textarea><br>
            <label for="writing_writer">작성자</label>
            <input id="writing_writer" ></input><br>
@@ -80,7 +81,7 @@
  
 
 <!-- 상세내용 -->
-<section class="detail_page">
+<section class="detail_page page_con">
    <div class="detail_content_area">
    
    </div>
@@ -96,7 +97,7 @@
 
 
       <!-- 글수정 화면 -->
-      <article class="update_page">
+      <section class="update_page page_con">
         <h1 class="title">글수정</h1>
         <label for="update_input">제목</label><br>
         <input type="text" id="update_input" placeholder="수정할 제목 입력하쇼"><br><br>
@@ -105,9 +106,9 @@
         
         <div class="update_btn_area">
             <button class="update_btn update">수정</button>
-            <button class="cancle_btn">취소</button>
+            <button class="cancel_btn">취소</button>
         </div>
-      </article>
+      </section>
     </main>
 
 <!-------- 참고) 패스워드 유효성 코드 패턴 의미 ------->
@@ -129,6 +130,7 @@
     </div>
   </form>
     <div class="layout"></div>
+    <script src="./query.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
