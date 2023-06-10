@@ -13,10 +13,21 @@ a {
   text-decoration: none;
 }
 
+section {
+  height: 105vh;
+  width: 100%;
+  max-width: 1600px;
+  margin-bottom: 5rem;
+  overflow-y: scroll !important;
+}
+
+section::-webkit-scrollbar {
+  height: 1px;
+}
+
 body {
   width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
   font-family: "Gowun Dodum", sans-serif;
 }
 
@@ -50,9 +61,9 @@ button:hover {
 }
 
 textarea {
-  border: none;
+  border: none !important;
   padding: 10px;
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.63);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.63) !important;
 }
 textarea:focus {
   outline: none;
@@ -75,18 +86,16 @@ input:focus {
   color: black;
 }
 
-.page_con {
-  margin-top: 3rem;
-}
-
 /* --------헤더 */
 #header {
   display: flex;
   align-items: center;
-  position: relative;
+  position: fixed;
+  top: 0;
+  z-index: 106;
   width: 100%;
   height: 60px;
-  background-color: rgb(28, 165, 83);
+  background-color: rgba(28, 165, 83, 0.687);
   color: white;
   box-shadow: 1px 1px 5px black;
 }
@@ -142,9 +151,8 @@ input:focus {
   margin-right: 1rem;
 }
 
-#header #menu_icon{
+#header #menu_icon {
   visibility: hidden;
-
 }
 
 /* 로그인 폼 */
@@ -162,7 +170,6 @@ input:focus {
   bottom: 10px;
   border-bottom: 3px solid rgba(172, 255, 47, 0.79);
   width: 0%;
-
   transition: 1s;
 }
 .login_icon:hover::before {
@@ -239,8 +246,9 @@ input:focus {
 /* 메인 */
 #main {
   position: relative;
-  max-width: 1400px;
-  margin: 3rem auto 3rem auto;
+  max-width: 1600px;
+  margin: 0 auto;
+  height: 100vh;
 }
 
 /* title */
@@ -252,19 +260,16 @@ input:focus {
 
 /* 홈 화면 */
 .home_page {
-  opacity: 0;
   transition: 1s;
-  visibility: hidden;
   width: 100%;
-  position: absolute;
-  border: 1px solid black;
 }
 
 .home_background {
+  margin-top: 6rem;
   width: 100%;
   transition: 1s;
   box-shadow: inset 0 0 5px 3px black, inset 0 0 0 0 black;
-  height: 85vh;
+  height: 80vh;
   background-color: greenyellow;
   background-image: url("../public/images/forest.jpg");
   background-position: center;
@@ -287,20 +292,39 @@ input:focus {
 /* =============게시판 */
 .list_page {
   max-width: 1600px;
-  transform: translate(-50%);
-  left: 50%;
   margin: 0 auto;
   text-align: center;
-  opacity: 0;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
   width: 100%;
   transition: 1s;
-  visibility: hidden;
-  position: absolute;
 }
 
 .list_page button {
   margin: 0 !important;
   padding: 12px !important;
+}
+
+.list_page #list_table {
+  margin: 50px 0;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list_page #list_table th {
+  color: white;
+  padding: 5px;
+  background-color: rgb(0, 0, 0);
+}
+
+.list_page > button {
+  background-color: black;
+  color: white;
+  border: none;
+  margin: 10px;
+  padding: 5px;
 }
 
 /* 필터된 게시판 리스트 */
@@ -371,44 +395,20 @@ input:focus {
 }
 
 #search_btn {
+  background-image: url("../public/images/1f50d.gif");
   padding: 10px;
   border: none;
   background-color: black;
   color: white;
 }
 
-/* 게시판 리스트  */
-.list_page #list_table {
-  margin: 50px 0;
-  text-align: center;
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.list_page #list_table th {
-  color: white;
-  padding: 5px;
-  background-color: rgb(0, 0, 0);
-}
-
-.list_page > button {
-  background-color: black;
-  color: white;
-  border: none;
-  margin: 10px;
-  padding: 5px;
-}
-
 /* --------------글작성-------------- */
 
 .writing_page {
-  width: 80%;
-  left: 50%;
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.356);
-  transform: translate(-50%);
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
   transition: 1s;
-  visibility: hidden;
-  position: absolute;
   padding: 8px;
 }
 .writing_page h1 {
@@ -437,14 +437,21 @@ input:focus {
 #writing_content {
   margin: 5px 0;
   resize: none;
-  width: 95%;
+  width: 100%;
   min-height: 400px;
-  max-width: 1200px;
+  /* max-width: 1200px; */
 }
 
 .writing_btn_con {
-  margin-top: 1rem;
   text-align: center;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.465);
+  position: sticky;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.533);
+  width: 100px;
+  margin: 0 auto;
+  padding: 10px;
+  bottom: 80px;
 }
 
 .writing_btn_con > button {
@@ -462,12 +469,10 @@ input:focus {
 .update_page {
   text-align: start;
   transition: 1s;
-  visibility: hidden;
+  opacity: 1;
   padding: 10px;
-  width: 50%;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .update_page label {
@@ -476,6 +481,7 @@ input:focus {
 
 .update_page h1 {
   text-align: center;
+  font-size: 1.35rem;
 }
 
 .update_page > input {
@@ -491,10 +497,10 @@ input:focus {
 #update_content {
   margin: 5px 0;
   resize: none;
-  min-width: 200px;
+  /* min-width: 200px; */
   min-height: 400px;
   width: 630px;
-  max-width: 614px;
+  /* max-width: 614px; */
 }
 .update_btn_area {
   text-align: center;
@@ -508,19 +514,25 @@ input:focus {
 
 /* 상세내용 페이지 */
 .detail_page {
+  position: relative;
   transition: 1s;
   background-color: rgb(255, 255, 255);
-  left: 50%;
-  width: 90%;
-  transform: translate(-50%);
-  visibility: hidden;
-  position: absolute;
-  padding: 10px;
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.408);
+  z-index: -1;
+  width: 100%;
+  /* box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.408); */
+}
+
+.detail_page h1 {
+  margin-top: 5rem;
 }
 
 .detail_page :is(p, figure) {
   margin: 5px;
+}
+
+.detail_content_area {
+  width: 100%;
+  height: 600px;
 }
 
 .detail_page figure {
@@ -530,6 +542,7 @@ input:focus {
 .detail_page > div > p {
   border-bottom: 1px solid rgba(0, 0, 0, 0.233);
   padding: 5px;
+  width: 100%;
 }
 
 .detail_page > div > p > span {
@@ -542,14 +555,21 @@ input:focus {
 }
 
 .detail_button_area {
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.608) !important;
   margin-top: 1.6rem;
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 1000;
   text-align: center;
+  width:300px;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.541);
 }
 .detail_button_area > button {
   border: none;
   background-color: black;
   color: white;
-  padding: 12px;
+  padding: 5px;
 }
 
 .detail_button_area > button:hover {
@@ -557,7 +577,7 @@ input:focus {
 }
 
 .submit_image {
-  width: 80%;
+  width: 85%;
   margin: 0 auto;
   text-align: center;
   height: 400px;
@@ -605,6 +625,12 @@ tr td {
   }
 }
 
+@media screen and (max-width: 520px) {
+  #search_btn {
+    right: 50px;
+  }
+}
+
 @media screen and (max-width: 502px) {
   #header {
     position: fixed;
@@ -620,9 +646,9 @@ tr td {
     opacity: 0;
     position: fixed;
     z-index: 105;
-    height: 23%;
+    height: 180px;
     top: 3.8rem;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.771);
   }
 
   #header > nav > ul {
@@ -645,14 +671,13 @@ tr td {
     width: 0%;
     border-bottom: 4px solid rgb(115, 229, 49);
   }
-  
+
   #header > nav > ul > li.menu_on::before {
     width: 9%;
   }
-  
 
   #header > nav > ul > li:hover {
-    background-color: rgb(30, 197, 63);
+    background-color: rgba(30, 197, 63, 0.633);
   }
 
   #header > nav.menu_on {
@@ -666,9 +691,7 @@ tr td {
     right: 1px;
   }
 
-  #header #menu_icon{
+  #header #menu_icon {
     visibility: visible;
-    
   }
-  
 }

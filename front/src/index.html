@@ -60,8 +60,8 @@
            </table>
 
       <!-- 글작성 -->
-      <section class="writing_page page_con" style="border: 1px solid black">
-        <h1 class="title">글쓰기</h1>
+      <section class="writing_page page_con">
+        <h1 class="title" id="wirting_page">글쓰기</h1>
         <form>
            <label for="text_title">제목</label>
            <input type="text" id="text_title" placeholder="제목을 입력하세요."></input><br>
@@ -77,23 +77,22 @@
               <button type="button" class="move_btn">목록</button>
            </div>
         </form>
+      </section>
+
+          
+    <!-- 상세내용 -->
+    <section class="detail_page page_con">
+      <h1 class="title">세부설명</h1>
+      <div class="detail_content_area">
+      </div>
+      <article class="detail_button_area">
+          <button class="move_btn">목록</button>
+          <button class="update_btn">수정</button>
+          <button class="del_btn">삭제</button>
+          <button class="prev_btn">이전글</button>
+          <button class="next_btn">다음글</button>
       </article>
- 
-
-<!-- 상세내용 -->
-<section class="detail_page page_con">
-   <div class="detail_content_area">
-   
-   </div>
-
-    <article class="detail_button_area">
-       <button class="move_btn">목록</button>
-       <button class="update_btn">수정</button>
-       <button class="del_btn">삭제</button>
-       <button class="prev_btn">이전글</button>
-       <button class="next_btn">다음글</button>
-    <article>
-</section>
+      </section>
 
 
       <!-- 글수정 화면 -->
@@ -132,5 +131,9 @@
     <div class="layout"></div>
     <script src="./query.js"></script>
     <script src="./app.js"></script>
+    <script src="./event.js"></script>
+
+
+
   </body>
 </html>

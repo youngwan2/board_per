@@ -1,5 +1,5 @@
 /* 헤더 쿼리 */
-const categoriesNav = document.getElementById('category_nav')
+const categoriesNav = document.getElementById("category_nav");
 const categories = document.querySelector(".category_ul");
 const categoriesLi = document.querySelectorAll(".category_ul>li");
 
@@ -11,6 +11,7 @@ const homePage = document.querySelector(".home_page");
 const listPage = document.querySelector(".list_page");
 const writingPage = document.querySelector(".writing_page");
 const detailPage = document.querySelector(".detail_page");
+console.log(detailPage)
 const updatePage = document.querySelector(".update_page");
 
 /* 글쓰기 쿼리 */
@@ -24,8 +25,11 @@ const wRegistBtn = document.getElementById("regist_btn");
 const username = document.getElementById("username");
 const password = document.getElementById("pw");
 
+/* 디테일 페이지 */
+const detailContentArea = document.querySelector('.detail_content_area')
+
 /* etc  */
-const menuIcon = document.getElementById('menu_icon')
+const menuIcon = document.getElementById("menu_icon");
 const loginIcon = document.querySelector(".login_icon");
 
 /* 레이아웃 쿼리 */

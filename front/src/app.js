@@ -1,8 +1,11 @@
-// (() => {
+const section = document.querySelectorAll("section");
+console.log(section);
 
 /* 변수 */
 // [현재 카테고리의 인덱스, 현재 게시글의 각 인덱스] =[각각 카운트]
+
 let [categoryIndex, currentItem] = [0, 0];
+
 const imageURL = [];
 
 // 로컬에 데이터 존재 안 하면 undefined 이므로 || 뒤의 0 을 할당
@@ -45,16 +48,14 @@ const state = (() => {
     const loginState = isLogin;
     return loginState;
   }
-
-  return { loginHandler};
+  return { loginHandler };
 })();
-
 
 /* 메뉴(카테고리) 클릭 시 포커스 유지하는 함수 */
 function menuFocus(categoryIndex) {
   categoriesLi.forEach((_, i) => {
     categoriesLi[i].classList.remove("menu_on");
-    if (i === categoryIndex) categoriesLi[i].classList.add("menu_on");
+    if (i === categoryIndex) {categoriesLi[i].classList.add("menu_on")};
   });
 }
 menuFocus(categoryIndex);
@@ -93,62 +94,38 @@ const pageChange = (category) => {
 
 /* 홈 페이지 */
 const home = () => {
-  homePage.style.cssText = `visibility:visible; opacity:1`;
-  listPage.style.cssText = `visibility:hidden; opacity:0`;
-  writingPage.style.cssText = `visibility:hidden; opacity:0`;
-  detailPage.style.cssText = `visibility:hidden; opacity:0`;
-  updatePage.style.cssText = `visibility:hidden; opacity:0`;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
-
 home();
 
 /* 게시판 페이지 */
 const board = () => {
-  listPage.style.cssText = `visibility:visible; opacity:1`;
-  homePage.style.cssText = `visibility:hidden; opacity:0`;
-  writingPage.style.cssText = `visibility:hidden; opacity:0`;
-  detailPage.style.cssText = `visibility:hidden; opacity:0`;
-  updatePage.style.cssText = `visibility:hidden; opacity:0`;
+  window.scrollTo({ top: section[1].offsetTop - 40, behavior: "smooth" });
 };
 
 function accessControl() {
   const isLogin = JSON.parse(sessionStorage.getItem("user"))?.isLogin || false;
   if (!isLogin) {
     alert("로그인 하세요");
-    home();
-    menuFocus(0);
+    homeShift();
     return loginToggle();
   }
 }
 
 /* 글쓰기 페이지 */
 const writing = () => {
-  writingPage.style.cssText = `visibility:visible; opacity:1`;
-  homePage.style.cssText = `visibility:hidden; opacity:0`;
-  listPage.style.cssText = `visibility:hidden; opacity:0`;
-  detailPage.style.cssText = `visibility:hidden; opacity:0`;
-  updatePage.style.cssText = `visibility:hidden; opacity:0`;
-
-  accessControl(); // 접근 권한를 통제하는 함수(가짜 미들웨어 역할)
+  window.scrollTo({ top: section[2].offsetTop - 30, behavior: "smooth" });
 };
 
 /* 글수정 페이지 */
 const update = () => {
-  updatePage.style.cssText = `visibility:visible; opacity:1`;
-  writingPage.style.cssText = `visibility:hidden; opacity:0`;
-  homePage.style.cssText = `visibility:hidden; opacity:0`;
-  listPage.style.cssText = `visibility:hidden; opacity:0`;
-  detailPage.style.cssText = `visibility:hidden; opacity:0`;
-
+  window.scrollTo({ top: section[4].offsetTop - 30, behavior: "smooth" });
   accessControl(); // 접근 권한를 통제하는 함수(가짜 미들웨어 역할)
 };
 
 /*  게시판으로 이동 */
 document.querySelectorAll(".move_btn").forEach((moveBtn) => {
-  moveBtn.addEventListener("click", () => {
-    board();
-    menuFocus(1);
-  });
+  moveBtn.addEventListener("click", boardShift);
 });
 
 /* ---------------기능추가------------ */
@@ -157,17 +134,14 @@ document.querySelectorAll(".move_btn").forEach((moveBtn) => {
 // 글작성 페이지에서 등록 버튼을 클릭하면 입력한 데이터를 데이터베이스에 추가한다.
 wRegistBtn.addEventListener("click", () => {
   storePushFunc();
-  board();
-  menuFocus(1);
+  boardShift();
 });
 
 /* 게시판 렌더 함수 */
 const render = () => {
   let listHTML = "";
-
   listHTML += `<tr><th>글번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일자</th></tr>
   `;
-
   for (let i = database.length - 1; i >= 0; i--) {
     listHTML += `
       <tr onclick="detail(${i})">
@@ -186,29 +160,28 @@ const render = () => {
 const detail = (i) => {
   currentItem = i;
   database[i].count++;
-  detailPage.style.cssText = `visibility:visible; opacity:1`;
-  writingPage.style.cssText = `visibility:hidden; opacity:0`;
-  homePage.style.cssText = `visibility:hidden; opacity:0`;
-  listPage.style.cssText = `visibility:hidden; opacity:0`;
+  window.scrollTo({ top: section[3].offsetTop, behavior: "smooth" });
+
   reload();
   const detailHTML = `
-<p><span>글번호</span>${1 * database[i].id + 1}</p>
-<p><span>제목</span>${database[i].title}</p>
-<p><span>조회수</span>${database[i].count}</p>
-<p><span>작성자</span>${database[i].writer} </p>
-<p><span>작성일시</span>${database[i].date}</p>
-<p><span>내용</span>${database[i].content}</p>
-<figure>    
-  <p>첨부이미지</p>
-    <div class="submit_image">
-      <img src="${
-        database[i].image
-      }" width="100%" height="430px" alt="image"></img>
-    </div>
-<figure>
+      <p><span>글번호</span>${1 * database[i].id + 1}</p>
+      <p><span>제목</span>${database[i].title}</p>
+      <p><span>조회수</span>${database[i].count}</p>
+      <p><span>작성자</span>${database[i].writer} </p>
+      <p><span>작성일시</span>${database[i].date}</p>
+      <p><span>내용</span>${database[i].content}</p>
+      <figure>    
+        <p>첨부이미지</p>
+          <div class="submit_image">
+            <img 
+              src="${database[i].image}" 
+              width="100%" 
+              height="400px" 
+              alt="image"></img>
+          </div>
+      </figure>
 `;
-
-  document.querySelector(".detail_content_area").innerHTML = detailHTML;
+  detailContentArea.innerHTML = detailHTML;
 };
 
 /* 글 수정 함수 */
@@ -217,7 +190,7 @@ function updateFunc() {
   const content = document.getElementById("update_content");
   database[currentItem].title = title.value;
   database[currentItem].content = content.value;
-  reload();
+  reload(); // 수정된 데이터를 데이터 베이스에 삽입 후 재랜더링하는 함수
   board();
 
   [title.value, content.value] = ["", ""];
@@ -228,13 +201,12 @@ function deleteFunc() {
   const isLogin = JSON.parse(sessionStorage.getItem("user"))?.isLogin || false;
   if (!isLogin) {
     alert("로그인 하세요");
-    home();
-    menuFocus(0);
+    homeShift();
     return loginToggle();
   }
 
   database.splice(currentItem, 1);
-  reload();
+  reload(); // 수정된 데이터를 데이터 베이스에 삽입 후 재랜더링하는 함수
   board();
 }
 
@@ -260,23 +232,20 @@ document.querySelector(".login_form").addEventListener("submit", (e) => {
   e.preventDefault();
 });
 
-
 /* 로그인 정보 입력 */
 username.addEventListener("keyup", (e) => {
-  loginState.userInfo.username =e.target.value
-
+  loginState.userInfo.username = e.target.value;
 });
 password.addEventListener("keyup", (e) => {
-  loginState.userInfo.password=e.target.value
-
+  loginState.userInfo.password = e.target.value;
 });
 
 /* ==========로그인/로그아웃 관리============ */
 const loginState = {
   userInfo: {
     isLogin: state.loginHandler(true),
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   },
 
   /* 로그인 */
@@ -305,6 +274,7 @@ const loginState = {
   },
 };
 
+/* 사용자가 로그인 시 메시지를 보여주는 함수 */
 function loginMessage() {
   document.querySelector(".login_icon").textContent =
     sessionStorage.getItem("login");
@@ -338,19 +308,6 @@ function loginToggle() {
   document.querySelector(".login_form").classList.toggle("login_on");
   layout.classList.toggle("layout_on");
 }
-
-/* 이벤트 리스너 등록 */
-document.querySelector(".prev_btn").addEventListener("click", prevBtn);
-document.querySelector(".next_btn").addEventListener("click", nextBtn);
-document.querySelector(".update_btn").addEventListener("click", update); // 수정 페이지 이동
-document.querySelector(".update").addEventListener("click", updateFunc);
-document.querySelector(".del_btn").addEventListener("click", deleteFunc);
-document.querySelector(".cancel_btn").addEventListener("click", board);
-document.querySelector(".writing_btn").addEventListener("click", writing);
-document.querySelector(".home_logo").addEventListener("click", () => {
-  home();
-  menuFocus(0);
-});
 
 /* 로그인 아이콘 클릭 시 해당 아이콘 텍스트가 login 이라면 login 모달창을 띄운다.  */
 loginIcon.addEventListener("click", () => {
@@ -397,7 +354,6 @@ function reload() {
   localStorage.setItem("data", json);
   render(database);
 }
-// })()
 
 /* 검색 기능 */
 const searchInput = document.getElementById("search_input");
@@ -431,10 +387,8 @@ function search(searchValue, database) {
 /* 필터된 리스트를 그리는 함수 */
 function filterListModal(database) {
   let listHTML = "";
-
   listHTML += `<tr><th>글번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일자</th></tr>
   `;
-
   database.map((_, i) => {
     return (listHTML += `
       <tr onclick="detail(${i})">
@@ -448,7 +402,6 @@ function filterListModal(database) {
   });
 
   listHTML += ` <button onclick="closeListModal()" class="close_btn">X</button>`;
-
   document.getElementById("list_modal").innerHTML = listHTML;
 }
 
@@ -457,9 +410,15 @@ function closeListModal() {
   document.getElementById("list_modal").classList.toggle("modal_on");
 }
 
+// 페이지 이동
 function homeShift() {
   home();
   menuFocus(0);
+}
+
+function boardShift() {
+  board();
+  menuFocus(1);
 }
 
 // 이미지 읽어와서 미리보기로 보여줌
@@ -473,7 +432,6 @@ function imageReader(e) {
 wImage.addEventListener("change", imageReader);
 
 // 메뉴 아이콘 조작
-menuIcon.addEventListener('click',()=>{
-  categoriesNav.classList.toggle('menu_on')
-})
-
+menuIcon.addEventListener("click", () => {
+  categoriesNav.classList.toggle("menu_on");
+});
