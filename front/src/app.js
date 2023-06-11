@@ -1,4 +1,4 @@
-const section = document.querySelectorAll("section");
+const section = document.querySelectorAll(".page_con");
 console.log(section);
 
 /* 변수 */
@@ -100,6 +100,7 @@ home();
 
 /* 게시판 페이지 */
 const board = () => {
+  console.log(section[1].offsetTop)
   window.scrollTo({ top: section[1].offsetTop - 40, behavior: "smooth" });
 };
 

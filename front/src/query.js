@@ -1,7 +1,7 @@
 /* 헤더 쿼리 */
 const categoriesNav = document.getElementById("category_nav");
 const categories = document.querySelector(".category_ul");
-const categoriesLi = document.querySelectorAll(".category_ul>li");
+const categoriesLi = document.querySelectorAll(".category_ul>li>a");
 
 /* 메인 쿼리 */
 const main = document.getElementById("main");

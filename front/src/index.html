@@ -13,9 +13,9 @@
       <h1 class="home_logo">My_Home</h1>
       <nav id="category_nav">
         <ul class="category_ul">
-          <li data-id="home"><span></span> 홈화면</li>
-          <li data-id="board"><span></span> 게시판</li>
-          <li data-id="writing"><span></span> 글작성</li>
+          <li data-id="home"><span></span><a data-id="home" href="#home"> 홈화면</a></li>
+          <li data-id="board"><span></span><a data-id="board" href="#board">게시판</a> </li>
+          <li data-id="writing"><span></span><a data-id="writing" href="#writing"> 글작성</a></li>
         </ul>
       </nav>
       <article class="etc">
@@ -24,12 +24,12 @@
       </article>
 
     </header>
-    <main id="main">
-      <section class="home_page page_con">
+    <main id="main" class="container">
+      <section id="home"  class="home_page page_con">
         <div class="home_background"></div>
       </section>
 
-      <section class="list_page page_con">
+      <section id="board" class="list_page page_con">
         <!-- 게시판 -->
         <h1 class="title"><span></span>게시판</h1>
         <div class="search_area">
@@ -41,6 +41,7 @@
           />
           <button id="search_btn">Search</button>
         </div>
+        <a href="#detail" id="detail_link">
         <table id="list_table">
 
           <tr>
@@ -49,9 +50,11 @@
             <td>거북이</td>
             <td>10</td>
             <td>1900-05-03</td> -->
+        
           </tr>
         </table>
-        <button class="writing_btn">글쓰기</button>
+      </a>
+        <button class="writing_btn"><a href="#writing">글쓰기</a> </button>
       </section>
 
            <!-- 검색으로 필터된 리스트(모달) -->
@@ -60,7 +63,7 @@
            </table>
 
       <!-- 글작성 -->
-      <section class="writing_page page_con">
+      <section id="writing" class="writing_page page_con">
         <h1 class="title" id="wirting_page">글쓰기</h1>
         <form>
            <label for="text_title">제목</label>
@@ -73,22 +76,22 @@
            <input type="file" id="writing_image">
            
            <div class="writing_btn_con">
-              <button type="button" id="regist_btn">등록</button>
-              <button type="button" class="move_btn">목록</button>
+              <button type="button" id="regist_btn"><a href="#board">등록</a></button>
+              <button type="button" class="move_btn"><a href="#board"> 목록</a></button>
            </div>
         </form>
       </section>
 
           
     <!-- 상세내용 -->
-    <section class="detail_page page_con">
+    <section id="detail" class="detail_page page_con">
       <h1 class="title">세부설명</h1>
       <div class="detail_content_area">
       </div>
       <article class="detail_button_area">
-          <button class="move_btn">목록</button>
-          <button class="update_btn">수정</button>
-          <button class="del_btn">삭제</button>
+          <button class="move_btn"><a href="#board">목록</a></button>
+          <button class="update_btn"><a href="#update">수정</a></button>
+          <button class="del_btn"><a href="#board">삭제</a></button>
           <button class="prev_btn">이전글</button>
           <button class="next_btn">다음글</button>
       </article>
@@ -96,7 +99,7 @@
 
 
       <!-- 글수정 화면 -->
-      <section class="update_page page_con">
+      <section id="update" class="update_page page_con">
         <h1 class="title">글수정</h1>
         <label for="update_input">제목</label><br>
         <input type="text" id="update_input" placeholder="수정할 제목 입력하쇼"><br><br>
@@ -104,8 +107,8 @@
         <textarea id="update_content" placeholder="수정할 내용을 입력하쇼"></textarea>
         
         <div class="update_btn_area">
-            <button class="update_btn update">수정</button>
-            <button class="cancel_btn">취소</button>
+            <button class="update_btn update"><a href="#board">수정</a> </button>
+            <button class="cancel_btn"><a href="#board">취소</a></button>
         </div>
       </section>
     </main>
