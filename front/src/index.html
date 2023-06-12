@@ -9,8 +9,7 @@
   </head>
   <body>
     <header id="header">
-    
-      <h1 class="home_logo">My_Home</h1>
+      <h1 class="home_logo"><a href="#home">My_Home</a></h1>
       <nav id="category_nav">
         <ul class="category_ul">
           <li data-id="home"><span></span><a data-id="home" href="#home"> 홈화면</a></li>
@@ -58,9 +57,11 @@
       </section>
 
            <!-- 검색으로 필터된 리스트(모달) -->
+           <a href="#detail">
            <table id="list_modal">
 
            </table>
+          </a>
 
       <!-- 글작성 -->
       <section id="writing" class="writing_page page_con">
@@ -107,7 +108,7 @@
         <textarea id="update_content" placeholder="수정할 내용을 입력하쇼"></textarea>
         
         <div class="update_btn_area">
-            <button class="update_btn update"><a href="#board">수정</a> </button>
+            <button class="update_btn update"><a href="#board">수정</a></button>
             <button class="cancel_btn"><a href="#board">취소</a></button>
         </div>
       </section>
@@ -135,8 +136,5 @@
     <script src="./query.js"></script>
     <script src="./app.js"></script>
     <script src="./event.js"></script>
-
-
-
   </body>
 </html>

@@ -1,4 +1,4 @@
-const section = document.querySelectorAll(".page_con");
+const section = document.querySelectorAll("section");
 console.log(section);
 
 /* 변수 */
@@ -100,7 +100,6 @@ home();
 
 /* 게시판 페이지 */
 const board = () => {
-  console.log(section[1].offsetTop)
   window.scrollTo({ top: section[1].offsetTop - 40, behavior: "smooth" });
 };
 
@@ -345,7 +344,7 @@ function loginRegex() {
   }
 }
 
-document.querySelector(".layout").addEventListener("click", loginToggle);
+// document.querySelector(".layout").addEventListener("click", loginToggle);
 document.querySelector(".login_sumbit_btn").addEventListener("click", () => {
   loginRegex(); // 정규식 검사 실시
 });
